@@ -27,7 +27,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 - Create an Admin and Normal User Account in AD
 - Join Client-1 to your domain (mydomain.com)
 - Setup Remote Desktop for non-administrative users on Client-1
-- Create a bunch of additional users and attempt to log into client-1 with one of the users
+
 
 <h2>Deployment and Configuration Steps</h2>
 
@@ -49,19 +49,19 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <br />
 
 <p>
-<img src="https://i.imgur.com/1MTqFRt.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/1MTqFRt.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
 <img src="https://i.imgur.com/MozuV2h.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-<img src="https://i.imgur.com/iYStHnp.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-<img src="https://i.imgur.com/v6MLiSG.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/iYStHnp.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/v6MLiSG.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
 <img src="https://i.imgur.com/q4rZkYM.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
 <img src="https://i.imgur.com/Ch5ap8s.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
 <img src="https://i.imgur.com/GJT7UvH.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
-<img src="" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/i2anVJd.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
 4)The next step is creating the Client-1 VM, using the same Resource Group and Vnet that was used in Steps 1-2. This will ensure that we have the same Vnet that will be needed for this tutorial.
   
-5)Next, we will log into Client-1 using Remote Desktop and ping DC-1's private IP address with 'ping -t 10.0.0.4' we will be doing a perpetual ping, and you will see that the Ping is not succeeding.
+5)Next, we will log into Client-1 using Remote Desktop and ping DC-1's private IP address through PowerShell with 'ping -t 10.0.0.4' we will be doing a perpetual ping, and you will see that the Ping is not succeeding.
 
 6) Next, we will log in to the Domain Controller (DC-1) and enable ICMPv4 through the local Windows Firewall. (NOTE: I am unable to provide screenshots inside of DC-1)
 
@@ -72,16 +72,37 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 10)Inside of _ADMINS OU, we will create a user by the name of 'Jane Doe' (same password as labuser) with the username of 'jane_admin'
 
-11) add jane_admin to the "Domain Admins" Security Group. Afterward we will close the Remote Desktop connection and log back in as "mydomain.com\jane_admin" she will be our admin account for now.
+11) add jane_admin to the "Domain Admins" Security Group. Afterward, we will close the Remote Desktop connection and log back in as "mydomain.com\jane_admin". She will be our admin account for now.
+
+
 
 
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/mBfkVnB.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/2jHeVHk.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+  <img src="https://i.imgur.com/imOY31O.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+  <img src="https://i.imgur.com/USelj2E.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+  <img src="https://i.imgur.com/xXWXrNl.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+  <img src="https://i.imgur.com/PvDyFzh.png" height="50%" width="50%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+12) Now we are going to join Client-1 to mydomain.com we are going to Client-1's DNS settings and changing it to DC-1's Private IP Address. 
+
+13)Next, you must log back into Client-1 as the original local admin (labuser) and join it to the domain (This will restart the computer) We will go to the settings inside of Client-1 and attempt to add it to DC_1's Domain. 
+
+14)Next you will go back to DC-1's remote desktop and verify if Client-1 shows up in (ADUC) inside the 'Computers' container on the root of the domain. 
+
+15)Create a new OU name "_CLIENTS" and drag Client-1 into it.
+</p>
+
+<p>
+  <img src="" height="50%" width="50%" alt="Disk Sanitization Steps"/>
+</p>
+
+<p>
+  16) Log in to Client-1 as mydomain.com-jane_admin and open system properties, click on Remote Desktop and allow "domain users" access to the remote desktop. Now we can log in to Client-1 as normal without any administrative user. (NOTE: Normally, we would want to do this with Group Policy that allows you to change MANY systems at once.)
 </p>
 <br />
